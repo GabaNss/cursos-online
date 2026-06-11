@@ -6,7 +6,7 @@ RUN a2enmod rewrite
 # Instala extensões PHP necessárias
 RUN apt-get update && apt-get install -y \
     libpng-dev libjpeg-dev libwebp-dev libzip-dev libicu-dev libonig-dev \
-    zip unzip git curl \
+    libxml2-dev zip unzip git curl \
   && docker-php-ext-configure gd --with-jpeg --with-webp \
   && docker-php-ext-install pdo pdo_mysql mbstring xml bcmath zip gd intl \
   && rm -rf /var/lib/apt/lists/*
