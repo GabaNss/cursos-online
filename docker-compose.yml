@@ -1,0 +1,45 @@
+services:
+
+  app:
+    build: .
+    container_name: cursos_app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      APP_NAME: EduCursos
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: http://localhost
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: cursos_online
+      DB_USERNAME: laravel
+      DB_PASSWORD: secret
+    volumes:
+      - storage_data:/var/www/html/storage/app/public
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11
+    container_name: cursos_db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: cursos_online
+      MARIADB_USER: laravel
+      MARIADB_PASSWORD: secret
+      MARIADB_ROOT_PASSWORD: rootsecret
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:
+  storage_data:
