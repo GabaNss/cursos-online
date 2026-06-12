@@ -5,7 +5,7 @@ services:
     container_name: cursos_app
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80"
     environment:
       APP_NAME: EduCursos
       APP_ENV: production
