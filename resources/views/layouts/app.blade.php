@@ -43,13 +43,8 @@
                         <i class="bi bi-grid-fill"></i> Cursos
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('inscricoes.index') ? 'active' : '' }}"
-                       href="{{ route('inscricoes.index') }}">
-                        <i class="bi bi-people-fill"></i> Inscrições
-                    </a>
-                </li>
                 @auth
+                @if(Auth::user()->isAdmin())
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('cursos.create') ? 'active' : '' }}"
                        href="{{ route('cursos.create') }}">
@@ -57,9 +52,16 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('inscricoes.index') ? 'active' : '' }}"
+                       href="{{ route('inscricoes.index') }}">
+                        <i class="bi bi-people-fill"></i> Inscrições
+                    </a>
+                </li>
+                @endif
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('inscricoes.create') ? 'active' : '' }}"
                        href="{{ route('inscricoes.create') }}">
-                        <i class="bi bi-person-plus-fill"></i> Nova Inscrição
+                        <i class="bi bi-person-plus-fill"></i> Inscrever-se
                     </a>
                 </li>
                 @if(Auth::user()->isAdmin())

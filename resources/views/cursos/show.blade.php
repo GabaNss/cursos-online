@@ -52,6 +52,7 @@
                 </div>
                 @auth
                 <div class="d-flex gap-2 mt-4 pt-3 border-top">
+                    @if(Auth::user()->isAdmin())
                     <a href="{{ route('cursos.edit', $curso) }}" class="btn btn-warning fw-semibold">
                         <i class="bi bi-pencil-fill me-1"></i> Editar Curso
                     </a>
@@ -62,9 +63,10 @@
                             <i class="bi bi-trash-fill me-1"></i> Excluir
                         </button>
                     </form>
+                    @endif
                     <a href="{{ route('inscricoes.create') }}?curso_id={{ $curso->id }}"
                        class="btn btn-primary fw-semibold ms-auto">
-                        <i class="bi bi-person-plus-fill me-1"></i> Nova Inscrição
+                        <i class="bi bi-person-plus-fill me-1"></i> Inscrever-se
                     </a>
                 </div>
                 @endauth

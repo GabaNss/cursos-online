@@ -9,25 +9,29 @@ Route::get('/', function () {
     return redirect()->route('cursos.index');
 });
 
-// Rotas que exigem autenticação — devem vir ANTES das rotas com {param}
+// Usuário autenticado: pode se inscrever
 Route::middleware('auth')->group(function () {
+    Route::get('/inscricoes/create', [InscricaoController::class, 'create'])->name('inscricoes.create');
+    Route::post('/inscricoes', [InscricaoController::class, 'store'])->name('inscricoes.store');
+});
+
+// Somente admin: gerenciar cursos e inscrições
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/cursos/create', [CursoController::class, 'create'])->name('cursos.create');
     Route::post('/cursos', [CursoController::class, 'store'])->name('cursos.store');
     Route::get('/cursos/{curso}/edit', [CursoController::class, 'edit'])->name('cursos.edit');
     Route::put('/cursos/{curso}', [CursoController::class, 'update'])->name('cursos.update');
     Route::delete('/cursos/{curso}', [CursoController::class, 'destroy'])->name('cursos.destroy');
 
-    Route::get('/inscricoes/create', [InscricaoController::class, 'create'])->name('inscricoes.create');
-    Route::post('/inscricoes', [InscricaoController::class, 'store'])->name('inscricoes.store');
+    Route::get('/inscricoes', [InscricaoController::class, 'index'])->name('inscricoes.index');
     Route::get('/inscricoes/{inscricao}/edit', [InscricaoController::class, 'edit'])->name('inscricoes.edit');
     Route::put('/inscricoes/{inscricao}', [InscricaoController::class, 'update'])->name('inscricoes.update');
     Route::delete('/inscricoes/{inscricao}', [InscricaoController::class, 'destroy'])->name('inscricoes.destroy');
 });
 
-// Rotas públicas — com {param} sempre depois das rotas fixas
+// Rotas públicas — {param} sempre depois das rotas fixas
 Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
 Route::get('/cursos/{curso}', [CursoController::class, 'show'])->name('cursos.show');
-Route::get('/inscricoes', [InscricaoController::class, 'index'])->name('inscricoes.index');
 
 // Painel admin — exige autenticação + is_admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {

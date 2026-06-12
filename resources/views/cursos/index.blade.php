@@ -75,11 +75,13 @@
                     <div class="d-flex gap-1">
                         <a href="{{ route('cursos.show', $curso) }}" class="btn-action view" title="Ver detalhes"><i class="bi bi-eye-fill"></i></a>
                         @auth
+                        @if(Auth::user()->isAdmin())
                         <a href="{{ route('cursos.edit', $curso) }}" class="btn-action edit" title="Editar"><i class="bi bi-pencil-fill"></i></a>
                         <form action="{{ route('cursos.destroy', $curso) }}" method="POST" onsubmit="return confirm('Excluir este curso?')">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn-action del" title="Excluir"><i class="bi bi-trash-fill"></i></button>
                         </form>
+                        @endif
                         @endauth
                     </div>
                 </div>
