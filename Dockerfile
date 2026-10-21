@@ -27,4 +27,5 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
 
 # Copia a config do Apache
 COPY .docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
-#defr
+
+CMD ["bash", "docker-init.sh"]

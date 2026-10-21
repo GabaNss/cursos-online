@@ -4,9 +4,6 @@ set -e
 echo "Aguardando banco de dados..."
 sleep 5
 
-echo "Gerando chave da aplicação..."
-php artisan key:generate --force
-
 echo "Criando link de storage..."
 php artisan storage:link
 
@@ -19,3 +16,5 @@ php artisan route:cache
 php artisan view:cache
 
 echo "Pronto!"
+
+exec apache2-foreground
