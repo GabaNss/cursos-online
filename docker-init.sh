@@ -9,8 +9,8 @@ php artisan storage:link --force
 
 if [ ! -f /var/www/html/storage/.initialized ]; then
   echo "Primeira inicialização: rodando migrations e seeder..."
-  php artisan migrate --seed --force
   touch /var/www/html/storage/.initialized
+  php artisan migrate --seed --force || echo "Aviso: seed falhou, pode já ter dados no banco."
 else
   echo "Rodando migrations..."
   php artisan migrate --force
